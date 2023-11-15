@@ -26,6 +26,12 @@ JOIN regions rg
 ORDER BY loc.station_name, hf.time;
 '''
 
+query_update = f'''
+SELECT
+MAX(timestamp)
+FROM hourlyforecasts;
+'''
+
 url_string = f"dbname={dbname} user={user} password={password} host={host} port={port}"
 
 with psycopg2.connect(url_string) as connection:
@@ -36,5 +42,8 @@ with psycopg2.connect(url_string) as connection:
     cursor.execute(query_data)
     response_data = cursor.fetchall()
     data = [x for x in response_data]
-
+    cursor.execute(query_update)
+    response_update = cursor.fetchall()
+    update = response_update[0][0]
+    
 headers = ['station_name', 'time', 'pressure_in']

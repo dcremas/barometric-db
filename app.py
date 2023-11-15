@@ -4,11 +4,11 @@ import pandas as pd
 import numpy as np
 
 from bokeh.layouts import column
-from bokeh.models import ColumnDataSource, Div, Select, RangeTool, HoverTool
+from bokeh.models import ColumnDataSource, Div, Select, RangeTool, HoverTool, Paragraph
 from bokeh.plotting import figure, curdoc
 from bokeh.themes import Theme
 
-from models import airports, data, headers
+from models import airports, data, headers, update
 
 df = pd.DataFrame(data, columns=headers)
 df['time'] = np.array(df['time'], dtype=np.datetime64)
@@ -54,6 +54,14 @@ select.add_tools(range_tool)
 select_airport = Select(title="Select Airport:", value="", options=airports)
 select_airport.on_change('value', callback)
 
-curdoc().add_root(column(desc, select_airport, plot, select, sizing_mode="stretch_width"))
+update_text_1 = f'The Postgres Cloud Database that feeds the visuals was last updated:'
+update_text_2 = f'Date: {update.strftime("%d %B, %Y")}'
+update_text_3 = f'Time: {update.strftime("%I:%M:%S %p")}'
+
+p1 = Paragraph(text=update_text_1, width=800, height=10, margin=(25, 25, 5, 40))
+p2 = Paragraph(text=update_text_2, width=800, height=10, margin=(5, 25, 5, 40))
+p3 = Paragraph(text=update_text_3, width=800, height=10, margin=(5, 25, 25, 40))
+
+curdoc().add_root(column(desc, select_airport, plot, select, p1, p2, p3, sizing_mode="stretch_width"))
 curdoc().theme = Theme(filename="theme.yaml")
 curdoc().title = 'Seven Day Historical & Forecasted Barometric Pressure'
