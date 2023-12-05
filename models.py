@@ -1,4 +1,5 @@
 import psycopg2
+from datetime import timedelta
 
 dbname = 'apple_weatherkit'
 user = 'dustincremascoli'
@@ -45,5 +46,6 @@ with psycopg2.connect(url_string) as connection:
     cursor.execute(query_update)
     response_update = cursor.fetchall()
     update = response_update[0][0]
+    update = (update - timedelta(hours = 6))
     
 headers = ['station_name', 'time', 'pressure_in']
