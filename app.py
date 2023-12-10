@@ -62,6 +62,11 @@ p1 = Paragraph(text=update_text_1, width=800, height=10, margin=(25, 25, 5, 40))
 p2 = Paragraph(text=update_text_2, width=800, height=10, margin=(5, 25, 5, 40))
 p3 = Paragraph(text=update_text_3, width=800, height=10, margin=(5, 25, 25, 40))
 
-curdoc().add_root(column(desc, select_airport, plot, select, p1, p2, p3, sizing_mode="stretch_width"))
+hyperlink_div = Div(
+    text="""<a href="https://dataviz.dustincremascoli.com">Go back to Data Visualizations Main Page</a>""",
+    width=400, height=100
+    )
+
+curdoc().add_root(column(desc, select_airport, plot, select, p1, p2, p3, hyperlink_div, sizing_mode="stretch_width"))
 curdoc().theme = Theme(filename="theme.yaml")
 curdoc().title = 'Seven Day Historical & Forecasted Barometric Pressure'
