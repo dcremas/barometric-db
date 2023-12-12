@@ -3,8 +3,8 @@ from datetime import timedelta
 
 dbname = 'apple_weatherkit'
 user = 'dustincremascoli'
-password = '2J6oodf6lY1xEgssydxTR1Pb9QPNFBuj'
-host = 'dpg-cki06rcldqrs73f2cgng-a.ohio-postgres.render.com'
+password = 'mp2BrVcin8chgfxUO7vb'
+host = 'db-aws.cu1h5zzynwdo.us-east-2.rds.amazonaws.com'
 port = 5432
 
 query_airports = f'''
