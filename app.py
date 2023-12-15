@@ -17,7 +17,7 @@ source = ColumnDataSource(data=dict(date=df[df['station_name'] == airports[0]]['
                                     pressure=df[df['station_name'] == airports[0]]['pressure_in']))
 
 plot = figure(tools="xpan", x_axis_type="datetime", x_axis_location="above",
-              x_range=(dates[0], dates[479]), y_range=(29.0, 31.0),
+              x_range=(dates[0], dates[479]), y_range=(28.5, 31.5),
               sizing_mode="stretch_width")
 plot.add_tools(HoverTool(tooltips=[('Date', '@date{%F}'), ('Time', '@date{%I:%M %p}'), ('Pressure', '@pressure{0.2f}')],
                          formatters={'@date': 'datetime'}, mode='vline'))
@@ -54,7 +54,7 @@ select.add_tools(range_tool)
 select_airport = Select(title="Select Airport:", value="", options=airports)
 select_airport.on_change('value', callback)
 
-update_text_1 = f'The Postgres Cloud Database that feeds the visuals was last updated:'
+update_text_1 = f'The Postgresql AWS Cloud Database that feeds the visuals was last updated:'
 update_text_2 = f'Date: {update.strftime("%d %B, %Y")}'
 update_text_3 = f'Time: {update.strftime("%I:%M:%S %p")}'
 
@@ -69,4 +69,4 @@ hyperlink_div = Div(
 
 curdoc().add_root(column(desc, select_airport, plot, select, p1, p2, p3, hyperlink_div, sizing_mode="stretch_width"))
 curdoc().theme = Theme(filename="theme.yaml")
-curdoc().title = 'Seven Day Historical & Forecasted Barometric Pressure'
+curdoc().title = '10 Day Historical & Forecasted Barometric Pressure'
