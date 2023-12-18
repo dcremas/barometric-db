@@ -1,6 +1,6 @@
 attrs:
     Plot:
-        background_fill_color: "#DDDDDD"
+        background_fill_color: "#f0f8fc"
         outline_line_color: white
         toolbar_location: above
         height: 500
