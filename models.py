@@ -22,12 +22,14 @@ ORDER BY loc.station_name;
 '''
 
 query_data = f'''
-SELECT loc.station_name, hf.time, hf.pressure_in
+SELECT loc.station_name, hf.time, hf.pressure_in, tz.utc_offset
 FROM locations loc
 JOIN hourlyforecasts hf
     ON loc.station = hf.station
 JOIN regions rg
     ON loc.state = rg.state
+JOIN time_zones tz
+    ON rg.tz_abbreviation = tz.abbreviation
 ORDER BY loc.station_name, hf.time;
 '''
 
@@ -47,6 +49,7 @@ with psycopg2.connect(url_string) as connection:
     cursor.execute(query_data)
     response_data = cursor.fetchall()
     data = [x for x in response_data]
+    data = list(map(lambda x: (x[0], x[1] + timedelta(hours = x[3]), x[2]), data))
     cursor.execute(query_update)
     response_update = cursor.fetchall()
     update = response_update[0][0]

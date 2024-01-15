@@ -38,7 +38,8 @@ def callback(attr, old, new):
     source.data = data
 
 select = figure(title="Drag the middle and edges of the selection box to change the range above",
-                height=130, width=800, y_range=plot.y_range, margin=(10, 10, 10, 15), 
+                height=130, width=800, y_range=plot.y_range,
+                margin=(10, 10, 10, 15), 
                 x_axis_type="datetime", y_axis_type=None,
                 tools="", toolbar_location=None, background_fill_color="#efefef",
                 sizing_mode="stretch_width")
