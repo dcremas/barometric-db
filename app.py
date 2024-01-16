@@ -1,10 +1,11 @@
 from pathlib import Path
+from datetime import datetime
 
 import pandas as pd
 import numpy as np
 
 from bokeh.layouts import column
-from bokeh.models import ColumnDataSource, Div, Select, RangeTool, HoverTool, Paragraph
+from bokeh.models import ColumnDataSource, Div, Select, RangeTool, HoverTool, Paragraph, Span
 from bokeh.plotting import figure, curdoc
 from bokeh.themes import Theme
 
@@ -24,6 +25,10 @@ plot.add_tools(HoverTool(tooltips=[('Date', '@date{%F}'), ('Time', '@date{%I:%M 
 plot.line('date', 'pressure', source=source)
 plot.circle('date', 'pressure', source=source, fill_color="white", size=2)
 plot.yaxis.axis_label = 'Barometric Pressure'
+
+vline_now = Span(location=datetime.now(), dimension='height',
+                 line_color='#009E73', line_width=1)
+plot.add_layout(vline_now)
 
 desc = Div(text=(Path(__file__).parent / "description.html").read_text("utf8"), sizing_mode="stretch_width",
            margin=(2, 2, 5, 15))
@@ -51,8 +56,9 @@ range_tool.overlay.fill_alpha = 0.2
 select.line('date', 'pressure', source=source)
 select.ygrid.grid_line_color = None
 select.add_tools(range_tool)
+select.add_layout(vline_now)
 
-select_airport = Select(title="Select Airport:", value="", options=airports, margin=(5, 10, 5, 15))
+select_airport = Select(title="Select US Airport:", value="", options=airports, margin=(5, 10, 5, 15))
 select_airport.on_change('value', callback)
 
 update_text_1 = f'The Postgresql AWS Cloud Database that feeds the visuals was last updated:'
