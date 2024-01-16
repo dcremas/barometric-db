@@ -13,7 +13,8 @@
 ##### Technologies:
 
 1. Python
-2. Apple WeatherKit REST API.
-3. Bokeh.
-4. HTML and CSS, plus a little Javascript.
-5. AWS RD Postgres Database.
+2. SQL
+3. Apple WeatherKit REST API.
+4. Bokeh.
+5. HTML and CSS, plus a little Javascript.
+6. AWS RD Postgres Database.
