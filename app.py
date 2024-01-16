@@ -1,5 +1,5 @@
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pandas as pd
 import numpy as np
@@ -10,6 +10,8 @@ from bokeh.plotting import figure, curdoc
 from bokeh.themes import Theme
 
 from models import airports, data, headers, update
+
+dt_now = datetime.now() - timedelta(hours = 6)
 
 df = pd.DataFrame(data, columns=headers)
 df['time'] = np.array(df['time'], dtype=np.datetime64)
@@ -26,7 +28,7 @@ plot.line('date', 'pressure', source=source)
 plot.circle('date', 'pressure', source=source, fill_color="white", size=2)
 plot.yaxis.axis_label = 'Barometric Pressure'
 
-vline_now = Span(location=datetime.now(), dimension='height',
+vline_now = Span(location=dt_now, dimension='height',
                  line_color='#009E73', line_width=1)
 plot.add_layout(vline_now)
 
