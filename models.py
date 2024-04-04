@@ -33,6 +33,15 @@ JOIN time_zones tz
 ORDER BY loc.station_name, hf.time;
 '''
 
+query_data_slp = '''
+SELECT *
+FROM hf_baro_impact
+WHERE slp_3hr_diff BETWEEN -5.0 AND -0.15
+    OR slp_6hr_diff BETWEEN -5.0 AND -0.25
+    OR slp_24hr_diff BETWEEN -5.0 AND -0.50
+ORDER BY station, slp_3hr_diff;
+'''
+
 query_update = f'''
 SELECT
 MAX(timestamp)
@@ -50,9 +59,13 @@ with psycopg2.connect(url_string) as connection:
     response_data = cursor.fetchall()
     data = [x for x in response_data]
     data = list(map(lambda x: (x[0], x[1] + timedelta(hours = x[3]), x[2]), data))
+    cursor.execute(query_data_slp)
+    response_data_slp = cursor.fetchall()
+    data_slp = [x for x in response_data_slp]
+    data_slp = list(map(lambda x: (x[0], x[1], x[2], x[3], x[4], x[5] + timedelta(hours = x[13]), x[6], x[7], x[8], x[9], x[10], x[11], x[12]), data_slp))
     cursor.execute(query_update)
     response_update = cursor.fetchall()
     update = response_update[0][0]
-    update = (update - timedelta(hours = 6))
+    update = (update - timedelta(hours = 5))
     
 headers = ['station_name', 'time', 'pressure_in']
