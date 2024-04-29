@@ -25,7 +25,7 @@ plot = figure(tools="xpan", x_axis_type="datetime", x_axis_location="above",
 plot.add_tools(HoverTool(tooltips=[('Date', '@date{%F}'), ('Time', '@date{%I:%M %p}'), ('Pressure', '@pressure{0.2f}')],
                          formatters={'@date': 'datetime'}, mode='vline'))
 plot.line('date', 'pressure', source=source)
-plot.circle('date', 'pressure', source=source, fill_color="white", size=2)
+plot.scatter('date', 'pressure', source=source, fill_color="white", size=2, marker="circle")
 plot.yaxis.axis_label = 'Barometric Pressure'
 
 vline_now = Span(location=dt_now, dimension='height',
@@ -60,7 +60,7 @@ select.ygrid.grid_line_color = None
 select.add_tools(range_tool)
 select.add_layout(vline_now)
 
-select_airport = Select(title="Select US Airport:", value="", options=airports, margin=(5, 10, 5, 15))
+select_airport = Select(title="Select US Airport:", value=airports[18], options=airports, margin=(5, 10, 5, 15))
 select_airport.on_change('value', callback)
 
 update_text_1 = f'The Postgresql AWS Cloud Database that feeds the visuals was last updated:'
