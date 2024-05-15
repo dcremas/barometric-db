@@ -17,7 +17,7 @@ df = pd.DataFrame(data, columns=headers)
 df['time'] = np.array(df['time'], dtype=np.datetime64)
 dates = np.array(df['time'], dtype=np.datetime64)
 source = ColumnDataSource(data=dict(date=df[df['station_name'] == airports[0]]['time'],
-                                    pressure=df[df['station_name'] == airports[0]]['pressure_in']))
+                                    pressure=df[df['station_name'] == airports[18]]['pressure_in']))
 
 plot = figure(tools="xpan", x_axis_type="datetime", x_axis_location="above",
               x_range=(dates[0], dates[479]), y_range=(28.5, 31.5), margin=(10, 10, 10, 15),
